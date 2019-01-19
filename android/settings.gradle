@@ -1,0 +1,3 @@
+rootProject.name = 'StyledButtons'
+
+include ':app'
