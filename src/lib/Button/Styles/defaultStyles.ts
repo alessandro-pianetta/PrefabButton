@@ -1,24 +1,19 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  btn: {
-    justifyContent: "center",
-    alignItems: "center",
+  container: {
     borderColor: "black",
     borderWidth: 1,
-    borderRadius: 4,
+    borderRadius: 4
+  },
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
     paddingVertical: 5,
     paddingHorizontal: 10
   },
-  btnPrimary: {
-    backgroundColor: "#007bff",
-    borderColor: "#007bff"
-  },
   text: {
     fontWeight: "400"
-  },
-  textPrimary: {
-    color: "#fff"
   }
 });
 
