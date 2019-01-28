@@ -10,10 +10,12 @@
 
 import React, { Component } from "react";
 import { View, TouchableOpacity, Text, LayoutChangeEvent } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
 
 interface Props {
   text: string;
+  icon: string;
   primary: boolean;
   secondary: boolean;
   success: boolean;
@@ -133,6 +135,7 @@ export default class Button extends Component<Props> {
   render() {
     const {
       text,
+      icon,
       light,
       outline,
       rounded,
@@ -163,6 +166,15 @@ export default class Button extends Component<Props> {
     const color = this.setColor();
     const size = this.setSize();
     const form = this.setForm();
+    const textStyle = [
+      styles.text,
+      {
+        color:
+          outline && !light ? this.color[color].bg : this.color[color].textColor
+      },
+      size.text,
+      full && styles.fullText
+    ];
 
     return (
       <TouchableOpacity
@@ -201,21 +213,10 @@ export default class Button extends Component<Props> {
           (disabled || grayedOut) && styles.disabled
         ]}
       >
-        <Text
-          style={[
-            styles.text,
-            {
-              color:
-                outline && !light
-                  ? this.color[color].bg
-                  : this.color[color].textColor
-            },
-            size.text,
-            full && styles.fullText
-          ]}
-        >
-          {text}
-        </Text>
+        {icon ? (
+          <Icon name={icon} style={[textStyle, { marginRight: 7 }]} />
+        ) : null}
+        <Text style={textStyle}>{text}</Text>
       </TouchableOpacity>
     );
   }
