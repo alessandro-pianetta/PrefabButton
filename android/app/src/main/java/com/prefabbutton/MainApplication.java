@@ -1,4 +1,4 @@
-package com.styledbuttons;
+package com.prefabbutton;
 
 import android.app.Application;
 
