@@ -27,9 +27,16 @@ const styles = StyleSheet.create({
   fullText: { fontSize: 20 },
   disabled: { opacity: 0.65 },
   smallText: { fontSize: 12 },
-  smallBtn: { paddingVertical: 4, paddingHorizontal: 8 },
+  smallBtn: {
+    paddingVertical: 4,
+    paddingHorizontal: 8
+  },
   largeText: { fontSize: 26 },
-  largeBtn: { paddingVertical: 8, paddingHorizontal: 16 }
+  largeBtn: {
+    paddingVertical: 8,
+    paddingHorizontal: 16
+  },
+  icon: { marginRight: 7 }
 });
 
 export default styles;

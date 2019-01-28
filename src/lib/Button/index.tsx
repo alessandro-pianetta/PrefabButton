@@ -9,11 +9,20 @@
  */
 
 import React, { Component } from "react";
-import { View, TouchableOpacity, Text, LayoutChangeEvent } from "react-native";
+import {
+  TouchableOpacity,
+  Text,
+  LayoutChangeEvent,
+  ViewStyle,
+  TextStyle
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import styles from "./styles";
 
 interface Props {
+  buttonStyle: ViewStyle;
+  textStyle: TextStyle;
+  iconStyle: TextStyle;
   text: string;
   icon: string;
   primary: boolean;
@@ -134,6 +143,9 @@ export default class Button extends Component<Props> {
 
   render() {
     const {
+      buttonStyle,
+      textStyle,
+      iconStyle,
       text,
       icon,
       light,
@@ -166,7 +178,7 @@ export default class Button extends Component<Props> {
     const color = this.setColor();
     const size = this.setSize();
     const form = this.setForm();
-    const textStyle = [
+    const textStyles = [
       styles.text,
       {
         color:
@@ -210,19 +222,23 @@ export default class Button extends Component<Props> {
           size.button,
           rounded && styles.rounded,
           form,
-          (disabled || grayedOut) && styles.disabled
+          (disabled || grayedOut) && styles.disabled,
+          buttonStyle
         ]}
       >
         {icon ? (
-          <Icon name={icon} style={[textStyle, { marginRight: 7 }]} />
+          <Icon name={icon} style={[textStyles, styles.icon, iconStyle]} />
         ) : null}
-        <Text style={textStyle}>{text}</Text>
+        <Text style={[textStyles, textStyle]}>{text}</Text>
       </TouchableOpacity>
     );
   }
 }
 
 Button.defaultProps = {
+  buttonStyle: {},
+  textStyle: {},
+  iconStyle: {},
   default: true,
   outline: false,
   small: false,
@@ -239,5 +255,5 @@ Button.defaultProps = {
   rounded: false,
   block: false,
   full: false,
-  text: "Click here!"
+  text: ""
 };
