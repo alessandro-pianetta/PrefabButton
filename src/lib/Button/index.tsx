@@ -10,10 +10,25 @@
 
 import React, { Component } from "react";
 import { View, TouchableOpacity, Text, LayoutChangeEvent } from "react-native";
-import { defaultStyles } from "./Styles";
+import styles from "./styles";
 
 interface Props {
   text: string;
+  primary: boolean;
+  secondary: boolean;
+  success: boolean;
+  danger: boolean;
+  warning: boolean;
+  info: boolean;
+  light: boolean;
+  dark: boolean;
+  grayedOut: boolean;
+  outline: boolean;
+  small: boolean;
+  large: boolean;
+  rounded: boolean;
+  block: boolean;
+  full: boolean;
   accessibilityHint: string;
   accessibilityLabel: string;
   accessibilityRole: string;
@@ -51,12 +66,78 @@ export default class Button extends Component<Props> {
     info: { bg: "#17a2b8", border: "#17a2b8", textColor: "#fff" },
     light: { bg: "#f8f9fa", border: "#f8f9fa", textColor: "#212529" },
     dark: { bg: "#343a40", border: "#343a40", textColor: "#fff" },
+    gray: { bg: "#A6A6A6", border: "#A6A6A6", textColor: "#fff" },
     default: { bg: "transparent", border: "#000", textColor: "#000" }
   };
+
+  setColor = () => {
+    const {
+      primary,
+      secondary,
+      success,
+      danger,
+      warning,
+      info,
+      light,
+      grayedOut,
+      dark
+    } = this.props;
+
+    if (grayedOut) {
+      return "gray";
+    } else if (primary) {
+      return "primary";
+    } else if (secondary) {
+      return "secondary";
+    } else if (success) {
+      return "success";
+    } else if (danger) {
+      return "danger";
+    } else if (warning) {
+      return "warning";
+    } else if (info) {
+      return "info";
+    } else if (light) {
+      return "light";
+    } else if (dark) {
+      return "dark";
+    } else {
+      return "default";
+    }
+  };
+
+  setSize() {
+    const { large, small } = this.props;
+    let text, button;
+
+    if (small) {
+      text = styles.smallText;
+      button = styles.smallBtn;
+    } else if (large) {
+      text = styles.largeText;
+      button = styles.largeBtn;
+    }
+
+    return { text, button };
+  }
+
+  setForm() {
+    const { block, full } = this.props;
+    if (block) {
+      return styles.block;
+    } else if (full) {
+      return styles.fullButton;
+    }
+  }
 
   render() {
     const {
       text,
+      light,
+      outline,
+      rounded,
+      full,
+      grayedOut,
       accessibilityHint,
       accessibilityLabel,
       accessibilityRole,
@@ -79,55 +160,83 @@ export default class Button extends Component<Props> {
       setOpacityTo
     } = this.props;
 
+    const color = this.setColor();
+    const size = this.setSize();
+    const form = this.setForm();
+
     return (
-      <View
+      <TouchableOpacity
+        hitSlop={hitSlop}
+        accessibilityHint={accessibilityHint}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole={accessibilityRole}
+        accessibilityStates={accessibilityStates}
+        accessible={accessible}
+        activeOpacity={activeOpacity}
+        delayLongPress={delayLongPress}
+        delayPressIn={delayPressIn}
+        delayPressOut={delayPressOut}
+        disabled={disabled || grayedOut}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        onLayout={onLayout}
+        onLongPress={onLongPress}
+        onPress={onPress}
+        onPressIn={onPressIn}
+        onPressOut={onPressOut}
+        pressRetentionOffset={pressRetentionOffset}
+        setOpacityTo={setOpacityTo}
         style={[
-          defaultStyles.container,
-          { borderColor: this.color["primary"].border }
+          styles.button,
+          {
+            backgroundColor:
+              outline && !light
+                ? this.color[color].textColor
+                : this.color[color].bg,
+            borderColor: this.color[color].border
+          },
+          size.button,
+          rounded && styles.rounded,
+          form,
+          (disabled || grayedOut) && styles.disabled
         ]}
       >
-        <TouchableOpacity
-          hitSlop={hitSlop}
-          accessibilityHint={accessibilityHint}
-          accessibilityLabel={accessibilityLabel}
-          accessibilityRole={accessibilityRole}
-          accessibilityStates={accessibilityStates}
-          accessible={accessible}
-          activeOpacity={activeOpacity}
-          delayLongPress={delayLongPress}
-          delayPressIn={delayPressIn}
-          delayPressOut={delayPressOut}
-          disabled={disabled}
-          onBlur={onBlur}
-          onFocus={onFocus}
-          onLayout={onLayout}
-          onLongPress={onLongPress}
-          onPress={onPress}
-          onPressIn={onPressIn}
-          onPressOut={onPressOut}
-          pressRetentionOffset={pressRetentionOffset}
-          setOpacityTo={setOpacityTo}
+        <Text
           style={[
-            defaultStyles.button,
-            { backgroundColor: this.color["primary"].bg }
+            styles.text,
+            {
+              color:
+                outline && !light
+                  ? this.color[color].bg
+                  : this.color[color].textColor
+            },
+            size.text,
+            full && styles.fullText
           ]}
         >
-          <Text
-            style={[
-              defaultStyles.text,
-              { color: this.color["primary"].textColor }
-            ]}
-          >
-            {text}
-          </Text>
-        </TouchableOpacity>
-      </View>
+          {text}
+        </Text>
+      </TouchableOpacity>
     );
   }
 }
 
 Button.defaultProps = {
-  color: "primary",
-  forms: "default",
+  default: true,
+  outline: false,
+  small: false,
+  large: false,
+  primary: false,
+  secondary: false,
+  success: false,
+  danger: false,
+  warning: false,
+  info: false,
+  light: false,
+  dark: false,
+  grayedOut: false,
+  rounded: false,
+  block: false,
+  full: false,
   text: "Click here!"
 };
