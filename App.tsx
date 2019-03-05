@@ -10,14 +10,14 @@
 
 import React, { Component } from "react";
 import { Platform, StyleSheet, View } from "react-native";
-import Button from "./src/lib/Button";
+import Button from "./src/Button";
 
 interface Props {}
 export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Button />
+        <Button text="Click Me!" />
       </View>
     );
   }

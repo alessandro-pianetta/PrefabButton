@@ -40,34 +40,33 @@ interface Props {
   rounded: boolean;
   block: boolean;
   full: boolean;
-  accessibilityHint: string;
-  accessibilityLabel: string;
-  accessibilityRole: string;
-  accessibilityStates: string[];
-  accessible: boolean;
-  activeOpacity: number;
-  delayLongPress: number;
-  delayPressIn: number;
-  delayPressOut: number;
   disabled: boolean;
-  hitSlop: { top: number; left: number; bottom: number; right: number };
-  onBlur(event: any): void;
-  onFocus(event: any): void;
-  onLayout(event: LayoutChangeEvent): void;
-  onLongPress(event: any): void;
-  onPress(event: any): void;
-  onPressIn(event: any): void;
-  onPressOut(event: any): void;
-  pressRetentionOffset: {
-    top: number;
-    left: number;
-    bottom: number;
-    right: number;
-  };
-  setOpacityTo(value: number, duration: number): void;
 }
 
-export default class Button extends Component<Props> {
+export default class Button extends Component<any, Props> {
+  static defaultProps = {
+    buttonStyle: {},
+    textStyle: {},
+    iconStyle: {},
+    default: true,
+    outline: false,
+    small: false,
+    large: false,
+    primary: false,
+    secondary: false,
+    success: false,
+    danger: false,
+    warning: false,
+    info: false,
+    light: false,
+    dark: false,
+    grayedOut: false,
+    rounded: false,
+    block: false,
+    full: false,
+    text: ""
+  };
+
   color = {
     primary: { bg: "#007bff", border: "#007bff", textColor: "#fff" },
     secondary: { bg: "#6c757d", border: "#6c757d", textColor: "#fff" },
@@ -153,26 +152,7 @@ export default class Button extends Component<Props> {
       rounded,
       full,
       grayedOut,
-      accessibilityHint,
-      accessibilityLabel,
-      accessibilityRole,
-      accessibilityStates,
-      accessible,
-      activeOpacity,
-      delayLongPress,
-      delayPressIn,
-      delayPressOut,
-      disabled,
-      hitSlop,
-      onBlur,
-      onFocus,
-      onLayout,
-      onLongPress,
-      onPress,
-      onPressIn,
-      onPressOut,
-      pressRetentionOffset,
-      setOpacityTo
+      disabled
     } = this.props;
 
     const color = this.setColor();
@@ -190,26 +170,7 @@ export default class Button extends Component<Props> {
 
     return (
       <TouchableOpacity
-        hitSlop={hitSlop}
-        accessibilityHint={accessibilityHint}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRole={accessibilityRole}
-        accessibilityStates={accessibilityStates}
-        accessible={accessible}
-        activeOpacity={activeOpacity}
-        delayLongPress={delayLongPress}
-        delayPressIn={delayPressIn}
-        delayPressOut={delayPressOut}
-        disabled={disabled || grayedOut}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        onLayout={onLayout}
-        onLongPress={onLongPress}
-        onPress={onPress}
-        onPressIn={onPressIn}
-        onPressOut={onPressOut}
-        pressRetentionOffset={pressRetentionOffset}
-        setOpacityTo={setOpacityTo}
+        {...this.props}
         style={[
           styles.button,
           {
@@ -234,26 +195,3 @@ export default class Button extends Component<Props> {
     );
   }
 }
-
-Button.defaultProps = {
-  buttonStyle: {},
-  textStyle: {},
-  iconStyle: {},
-  default: true,
-  outline: false,
-  small: false,
-  large: false,
-  primary: false,
-  secondary: false,
-  success: false,
-  danger: false,
-  warning: false,
-  info: false,
-  light: false,
-  dark: false,
-  grayedOut: false,
-  rounded: false,
-  block: false,
-  full: false,
-  text: ""
-};
